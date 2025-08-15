@@ -312,7 +312,7 @@ if (isset($_POST['download']) && $_POST['download'] === 'true') {
                     <input type="hidden" name="phone" value="<?php echo htmlspecialchars($phone); ?>">
                     <input type="hidden" name="address" value="<?php echo htmlspecialchars($address); ?>">
                     <input type="hidden" name="download" value="true">
-                    <!--<button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-success">
                         💾 Descargar HTML
                     </button>
                 </form>
