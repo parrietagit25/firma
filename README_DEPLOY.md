@@ -4,8 +4,8 @@
 
 - Docker instalado y funcionando
 - Docker Compose instalado
-- Acceso a la red Docker `nps_default` (debe existir)
 - Puerto 8084 disponible en el servidor
+- Red Docker `nps_nps_network` existente
 
 ## 🏗️ Estructura del Proyecto
 
@@ -13,7 +13,8 @@
 firma/
 ├── Dockerfile                 # Imagen Docker para PHP
 ├── docker-compose.yml         # Orquestación de servicios
-├── nginx.conf                 # Configuración de Nginx
+├── apache.conf                # Configuración personalizada de Apache
+├── nginx-proxy-config.conf    # Configuración para proxy reverso (opcional)
 ├── .dockerignore             # Archivos excluidos del build
 ├── deploy.sh                 # Script de despliegue automático
 ├── index.html                # Formulario principal
@@ -41,7 +42,7 @@ chmod +x deploy.sh
 
 ```bash
 # 1. Crear directorios necesarios
-mkdir -p logs/nginx
+mkdir -p logs
 mkdir -p img
 
 # 2. Construir y levantar contenedores
@@ -56,19 +57,23 @@ docker-compose logs generador-firmas
 
 ## 🌐 Acceso a la Aplicación
 
-Una vez desplegado, la aplicación estará disponible en:
+### Acceso Directo (Recomendado para pruebas)
+**URL:** `http://54.94.232.102:8084`
 
-**URL Principal:** `http://54.94.232.102/generador_firmas`
+### Acceso a través de Proxy Reverso (Opcional)
+Si quieres acceder a través de la ruta `/generador_firmas`, puedes:
 
-**URL Directa del Contenedor:** `http://54.94.232.102:8084`
+1. **Agregar la configuración de Nginx** del archivo `nginx-proxy-config.conf` a tu servidor Nginx existente
+2. **Reiniciar Nginx** después de la configuración
+3. **Acceder a:** `http://54.94.232.102/generador_firmas`
 
 ## 🔧 Configuración de Redes
 
 El proyecto se integra con tu infraestructura existente:
 
-- **Red:** `nps_default` (compartida con NPS)
+- **Red:** `nps_nps_network` (compartida con NPS)
 - **Puerto:** 8084 (interno del contenedor)
-- **Proxy:** Nginx en puerto 80
+- **Servidor Web:** Apache con configuración personalizada
 
 ## 📊 Gestión de Contenedores
 
@@ -81,9 +86,6 @@ docker-compose ps
 ```bash
 # Logs del generador de firmas
 docker-compose logs generador-firmas
-
-# Logs de Nginx
-docker-compose logs nginx-proxy
 
 # Logs en tiempo real
 docker-compose logs -f generador-firmas
@@ -116,8 +118,8 @@ docker-compose up --build -d
 # Verificar redes disponibles
 docker network ls
 
-# Si nps_default no existe, crear la red
-docker network create nps_default
+# Si nps_nps_network no existe, verificar que los contenedores NPS estén ejecutándose
+docker ps | grep nps
 ```
 
 ### Error: Puerto ocupado
@@ -148,7 +150,7 @@ docker-compose logs generador-firmas
 
 ## 🔒 Seguridad
 
-- **Puerto interno:** Solo accesible a través de Nginx
+- **Puerto interno:** Solo accesible a través del puerto 8084
 - **CORS:** Configurado para permitir acceso desde cualquier origen
 - **Permisos:** Archivos con permisos mínimos necesarios
 - **Logs:** Registro de acceso y errores habilitado
@@ -168,9 +170,6 @@ docker inspect generador-firmas
 ```bash
 # Logs de Apache
 docker exec generador-firmas tail -f /var/log/apache2/access.log
-
-# Logs de Nginx
-docker exec nginx_proxy_firmas tail -f /var/log/nginx/access.log
 ```
 
 ## 🔄 Actualizaciones
@@ -210,7 +209,7 @@ Para problemas técnicos o consultas:
    ```
 
 2. **Acceso a la aplicación:**
-   - Abrir `http://54.94.232.102/generador_firmas`
+   - Abrir `http://54.94.232.102:8084`
    - Verificar que se muestre el formulario
 
 3. **Funcionalidad:**
@@ -224,6 +223,19 @@ Para problemas técnicos o consultas:
    docker-compose logs generador-firmas | grep -i error
    ```
 
+## 🌐 Configuración de Proxy Reverso (Opcional)
+
+Si quieres acceder a través de la ruta `/generador_firmas`:
+
+1. **Editar tu configuración de Nginx** (generalmente en `/etc/nginx/sites-available/default`)
+2. **Agregar el contenido** del archivo `nginx-proxy-config.conf`
+3. **Reiniciar Nginx:**
+   ```bash
+   sudo systemctl reload nginx
+   # o
+   sudo nginx -s reload
+   ```
+
 ---
 
-**🎯 El generador de firmas estará completamente funcional en Docker y accesible en la ruta especificada.**
+**🎯 El generador de firmas estará completamente funcional en Docker y accesible en el puerto 8084.**

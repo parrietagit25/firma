@@ -11,32 +11,13 @@ services:
       - ./logs:/var/log/apache2
     environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html/generador_firmas
-    networks:
-      - nps_network
     restart: unless-stopped
-    depends_on:
-      - nps_mysql
-
-  # Servicio de proxy reverso para integrar con la ruta /generador_firmas
-  nginx-proxy:
-    image: nginx:alpine
-    container_name: nginx_proxy_firmas
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./logs/nginx:/var/log/nginx
     networks:
-      - nps_network
-    restart: unless-stopped
-    depends_on:
-      - generador-firmas
+      - nps_nps_network
 
 networks:
-  nps_network:
+  nps_nps_network:
     external: true
-    name: nps_default
 
 volumes:
-  img_data:
   logs:

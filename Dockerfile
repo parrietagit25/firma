@@ -13,15 +13,8 @@ RUN apt-get update && apt-get install -y \
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd zip
 
-# Habilitar mod_rewrite para Apache
-RUN a2enmod rewrite
-
-# Configurar Apache para el proyecto
-RUN echo '<Directory /var/www/html>\n\
-    AllowOverride All\n\
-    Require all granted\n\
-</Directory>' > /etc/apache2/conf-available/docker-php.conf \
-    && a2enconf docker-php
+# Habilitar mod_rewrite y mod_headers para Apache
+RUN a2enmod rewrite headers
 
 # Crear directorio del proyecto
 RUN mkdir -p /var/www/html/generador_firmas
@@ -34,6 +27,9 @@ COPY . /var/www/html/generador_firmas/
 
 # Crear directorio para imágenes si no existe
 RUN mkdir -p /var/www/html/generador_firmas/img
+
+# Copiar configuración personalizada de Apache
+COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
 # Establecer permisos
 RUN chown -R www-data:www-data /var/www/html/generador_firmas \

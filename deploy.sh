@@ -20,8 +20,8 @@ mkdir -p logs/nginx
 mkdir -p img
 
 # Verificar si existe la red de Docker
-if ! docker network ls | grep -q "nps_default"; then
-    echo "❌ La red 'nps_default' no existe. Por favor, asegúrate de que los contenedores NPS estén ejecutándose."
+if ! docker network ls | grep -q "nps_nps_network"; then
+    echo "❌ La red 'nps_nps_network' no existe. Por favor, asegúrate de que los contenedores NPS estén ejecutándose."
     exit 1
 fi
 
@@ -49,7 +49,7 @@ echo ""
 echo "✅ Despliegue completado!"
 echo ""
 echo "🌐 El generador de firmas estará disponible en:"
-echo "   http://54.94.232.102/generador_firmas"
+echo "   http://54.94.232.102:8084"
 echo ""
 echo "📊 Para ver los logs en tiempo real:"
 echo "   docker-compose logs -f generador-firmas"
