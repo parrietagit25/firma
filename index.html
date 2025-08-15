@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador de Firma de Correo - GrupoPCR</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -198,9 +199,9 @@
                 </div>
 
                 <div style="text-align: center;">
-                    <button type="button" class="btn" onclick="previewSignature()">
+                    <!--<button type="button" class="btn" onclick="previewSignature()">
                         👁️ Vista Previa
-                    </button>
+                    </button>-->
                     <button type="submit" class="btn">
                         🚀 Generar Firma
                     </button>
@@ -251,68 +252,142 @@
 
         function generateSignatureHTML(displayName, title, email, phone, address) {
             return `
-                <table style="border-collapse: collapse; width: 100%; height: 135px; color: white; font-family: Arial, sans-serif;">
+                <table style="border-collapse: collapse; width: 100%; height: 135px; color: #2c3e50; font-family: Arial, sans-serif; background-color: white;">
                     <tbody>
                         <tr style="height: 135px;">
                             <td style="width: 40%; height: 135px; vertical-align: top; padding: 10px;">
                                 <p style="margin: 0 0 10px 0;">
                                     <span style="font-size: 18px; color: #e74c3c; font-weight: bold;">${displayName}</span><br>
-                                    <strong style="color: #ecf0f1; font-size: 14px;">${title}</strong>
+                                    <strong style="color: #2c3e50; font-size: 14px;">${title}</strong>
                                 </p>
-                                <p style="margin: 0; font-size: 12px; color: #bdc3c7;">
+                                <p style="margin: 0; font-size: 12px; color: #7f8c8d;">
                                     ${email}<br>
                                     ${phone}<br>
                                     ${address}
                                 </p>
                             </td>
-                            <td style="width: 60%; height: 135px; text-align: center; vertical-align: middle;">
-                                <div style="background: white; padding: 15px; border-radius: 8px; display: inline-block;">
-                                    <div style="color: #2c3e50; font-size: 24px; font-weight: bold;">GrupoPCR</div>
-                                    <div style="color: #7f8c8d; font-size: 12px; text-transform: uppercase;">PANAMA CAR RENTAL</div>
-                                </div>
+                            <td style="width: 60%; height: 135px; text-align: left; vertical-align: middle; padding-left: 0;">
+                                <img style="float: left; margin-left: -20px;" src="img/1.png" alt="Logotipo1" width="350" height="181" />
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 
-                <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center;">
-                    <div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 20px;">
-                        <div style="text-align: center;">
-                            <div style="color: #2c3e50; font-weight: bold; font-size: 14px;">AUTOMARKET</div>
-                            <div style="color: #e74c3c; font-size: 12px;">RENT A CAR ✓</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="color: #2c3e50; font-weight: bold; font-size: 14px;">AUTOSERVICE</div>
-                            <div style="color: #e74c3c; font-size: 12px;">TALLER ✓</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="color: #2c3e50; font-weight: bold; font-size: 14px;">PANARENTING</div>
-                            <div style="color: #e74c3c; font-size: 12px;">RENTING</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="color: #2c3e50; font-weight: bold; font-size: 14px;">AUTOMARKET</div>
-                            <div style="color: #e74c3c; font-size: 12px;">SEMINUEVOS ✓</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 15px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div style="background: #e74c3c; color: white; padding: 10px; border-radius: 5px; text-align: center;">
-                            <div style="font-weight: bold;">ISO 45001:2018</div>
-                            <div style="font-size: 12px;">BUREAU VERITAS</div>
-                        </div>
-                        <div style="color: #2c3e50; font-style: italic; text-align: right; max-width: 60%;">
-                            Comprometidos con la seguridad de nuestros colaboradores, clientes y proveedores.
-                        </div>
-                    </div>
-                </div>
+                <img style="float: left;" src="img/2.png" alt="Logotipo2" width="612" height="107" />
             `;
         }
 
         function downloadAsImage() {
-            // Implementar descarga como imagen usando html2canvas
-            alert('Función de descarga como imagen en desarrollo. Por ahora usa la descarga HTML.');
+            // Obtener el elemento de vista previa
+            const signaturePreview = document.getElementById('signaturePreview');
+            
+            if (!signaturePreview || !signaturePreview.innerHTML.trim()) {
+                alert('❌ Primero debes generar una vista previa de la firma.');
+                return;
+            }
+
+            // Crear un contenedor temporal con el HTML de la firma
+            const tempContainer = document.createElement('div');
+            tempContainer.style.position = 'absolute';
+            tempContainer.style.left = '-9999px';
+            tempContainer.style.top = '-9999px';
+            tempContainer.style.background = 'white';
+            tempContainer.style.padding = '20px';
+            tempContainer.style.width = '600px';
+            tempContainer.style.height = '400px';
+            tempContainer.style.overflow = 'hidden';
+            
+            // Insertar el HTML de la firma directamente
+            tempContainer.innerHTML = signaturePreview.innerHTML;
+            document.body.appendChild(tempContainer);
+
+            // Mostrar indicador de carga
+            const originalContent = signaturePreview.innerHTML;
+            signaturePreview.innerHTML = '<div style="text-align: center; padding: 40px; color: #2c3e50;"><h3>🔄 Generando imagen...</h3><p>Por favor espera mientras se procesa la firma.</p></div>';
+
+            // Esperar a que las imágenes se carguen completamente
+            const images = tempContainer.querySelectorAll('img');
+            let loadedImages = 0;
+            const totalImages = images.length;
+
+            if (totalImages === 0) {
+                // No hay imágenes, proceder directamente
+                generateImage();
+            } else {
+                // Esperar a que todas las imágenes se carguen
+                images.forEach(img => {
+                    if (img.complete && img.naturalHeight !== 0) {
+                        loadedImages++;
+                        if (loadedImages === totalImages) {
+                            generateImage();
+                        }
+                    } else {
+                        img.onload = () => {
+                            loadedImages++;
+                            if (loadedImages === totalImages) {
+                                generateImage();
+                            }
+                        };
+                        img.onerror = () => {
+                            loadedImages++;
+                            if (loadedImages === totalImages) {
+                                generateImage();
+                            }
+                        };
+                    }
+                });
+            }
+
+            function generateImage() {
+                // Usar html2canvas en el contenedor temporal
+                if (typeof html2canvas !== 'undefined') {
+                    html2canvas(tempContainer, {
+                        backgroundColor: '#ffffff',
+                        scale: 2, // Mejor calidad
+                        useCORS: false, // No necesario para imágenes locales
+                        allowTaint: false, // No necesario para imágenes locales
+                        width: 600,
+                        height: 400,
+                        logging: false, // Desactivar logs
+                        removeContainer: false, // No remover el contenedor
+                        imageTimeout: 10000 // Timeout de 10 segundos
+                    }).then(canvas => {
+                        // Restaurar contenido original
+                        signaturePreview.innerHTML = originalContent;
+                        
+                        // Crear enlace de descarga
+                        const link = document.createElement('a');
+                        const displayName = document.getElementById('displayName').value;
+                        link.download = `firma_${displayName.replace(/\s+/g, '_')}.png`;
+                        link.href = canvas.toDataURL('image/png');
+                        link.click();
+                        
+                        // Limpiar
+                        document.body.removeChild(tempContainer);
+                        
+                        // Mostrar mensaje de éxito
+                        alert(`✅ Imagen descargada exitosamente como "firma_${displayName.replace(/\s+/g, '_')}.png"`);
+                    }).catch(error => {
+                        console.error('Error al generar imagen:', error);
+                        
+                        // Restaurar contenido original
+                        signaturePreview.innerHTML = originalContent;
+                        
+                        // Limpiar
+                        document.body.removeChild(tempContainer);
+                        
+                        alert('❌ Error al generar la imagen. Por favor, usa la descarga HTML.\n\nError: ' + error.message);
+                    });
+                } else {
+                    // Restaurar contenido original
+                    signaturePreview.innerHTML = originalContent;
+                    
+                    // Limpiar
+                    document.body.removeChild(tempContainer);
+                    
+                    alert('❌ Librería html2canvas no disponible. Por favor, usa la descarga HTML.');
+                }
+            }
         }
 
         function downloadAsHTML() {

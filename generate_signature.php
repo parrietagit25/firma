@@ -42,10 +42,10 @@ function generateSignatureHTML($displayName, $title, $email, $phone, $address) {
                 margin: 0;
                 padding: 0;
                 font-family: Arial, sans-serif;
-                background-color: #2c3e50;
+                background-color: white;
             }
             .signature-container {
-                background-color: #2c3e50;
+                background-color: white;
                 padding: 20px;
                 max-width: 600px;
                 margin: 0 auto;
@@ -54,7 +54,8 @@ function generateSignatureHTML($displayName, $title, $email, $phone, $address) {
                 border-collapse: collapse;
                 width: 100%;
                 height: 135px;
-                color: white;
+                color: #2c3e50;
+                background-color: white;
             }
             .signature-table td {
                 vertical-align: top;
@@ -67,6 +68,7 @@ function generateSignatureHTML($displayName, $title, $email, $phone, $address) {
                 width: 60%;
                 text-align: center;
                 vertical-align: middle;
+                padding: 10px;
             }
             .name {
                 font-size: 18px;
@@ -75,87 +77,15 @@ function generateSignatureHTML($displayName, $title, $email, $phone, $address) {
                 margin-bottom: 5px;
             }
             .title {
-                color: #ecf0f1;
+                color: #2c3e50;
                 font-size: 14px;
                 font-weight: bold;
                 margin-bottom: 10px;
             }
             .contact-details {
                 font-size: 12px;
-                color: #bdc3c7;
-                line-height: 1.4;
-            }
-            .company-logo {
-                background: white;
-                padding: 15px;
-                border-radius: 8px;
-                display: inline-block;
-            }
-            .company-name {
-                color: #2c3e50;
-                font-size: 24px;
-                font-weight: bold;
-            }
-            .company-tagline {
                 color: #7f8c8d;
-                font-size: 12px;
-                text-transform: uppercase;
-            }
-            .services-section {
-                background: white;
-                padding: 15px;
-                border-radius: 8px;
-                margin-top: 15px;
-                text-align: center;
-            }
-            .services-grid {
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                flex-wrap: wrap;
-                gap: 20px;
-            }
-            .service-item {
-                text-align: center;
-            }
-            .service-name {
-                color: #2c3e50;
-                font-weight: bold;
-                font-size: 14px;
-            }
-            .service-type {
-                color: #e74c3c;
-                font-size: 12px;
-            }
-            .certification-section {
-                background: white;
-                padding: 15px;
-                border-radius: 8px;
-                margin-top: 15px;
-            }
-            .certification-content {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-            .iso-badge {
-                background: #e74c3c;
-                color: white;
-                padding: 10px;
-                border-radius: 5px;
-                text-align: center;
-            }
-            .iso-number {
-                font-weight: bold;
-            }
-            .iso-company {
-                font-size: 12px;
-            }
-            .commitment-text {
-                color: #2c3e50;
-                font-style: italic;
-                text-align: right;
-                max-width: 60%;
+                line-height: 1.4;
             }
             @media print {
                 body { background-color: white !important; }
@@ -169,6 +99,8 @@ function generateSignatureHTML($displayName, $title, $email, $phone, $address) {
                 <tbody>
                     <tr>
                         <td class="contact-info">
+                            <br>
+                            <br>
                             <div class="name">' . htmlspecialchars($displayName) . '</div>
                             <div class="title">' . htmlspecialchars($title) . '</div>
                             <div class="contact-details">
@@ -178,47 +110,18 @@ function generateSignatureHTML($displayName, $title, $email, $phone, $address) {
                             </div>
                         </td>
                         <td class="logo-section">
-                            <div class="company-logo">
-                                <div class="company-name">GrupoPCR</div>
-                                <div class="company-tagline">PANAMA CAR RENTAL</div>
-                            </div>
+                            <img src="img/1.png" alt="Logotipo1" width="350" height="181" style="display: block; max-width: 100%; height: auto;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <img src="img/2.png" alt="Logotipo2" width="612" height="107" style="display: block; max-width: 100%; height: auto;" />
                         </td>
                     </tr>
                 </tbody>
             </table>
             
-            <div class="services-section">
-                <div class="services-grid">
-                    <div class="service-item">
-                        <div class="service-name">AUTOMARKET</div>
-                        <div class="service-type">RENT A CAR ✓</div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-name">AUTOSERVICE</div>
-                        <div class="service-type">TALLER ✓</div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-name">PANARENTING</div>
-                        <div class="service-type">RENTING</div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-name">AUTOMARKET</div>
-                        <div class="service-type">SEMINUEVOS ✓</div>
-                    </div>
-                </div>
-            </div>
             
-            <div class="certification-section">
-                <div class="certification-content">
-                    <div class="iso-badge">
-                        <div class="iso-number">ISO 45001:2018</div>
-                        <div class="iso-company">BUREAU VERITAS</div>
-                    </div>
-                    <div class="commitment-text">
-                        Comprometidos con la seguridad de nuestros colaboradores, clientes y proveedores.
-                    </div>
-                </div>
-            </div>
         </div>
     </body>
     </html>';
@@ -241,10 +144,11 @@ if (isset($_POST['download']) && $_POST['download'] === 'true') {
 
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firma Generada - GrupoPCR</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Firma Generada - GrupoPCR</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -412,13 +316,13 @@ if (isset($_POST['download']) && $_POST['download'] === 'true') {
                         💾 Descargar HTML
                     </button>
                 </form>
-
+                <!--
                 <button type="button" class="btn" onclick="copyToClipboard()">
                     📋 Copiar HTML
-                </button>
+                </button>-->
 
                 <button type="button" class="btn btn-secondary" onclick="downloadAsImage()">
-                    📷 Descargar como Imagen
+                    📷 Descargar como imagen
                 </button>
             </div>
 
@@ -441,8 +345,98 @@ if (isset($_POST['download']) && $_POST['download'] === 'true') {
         }
 
         function downloadAsImage() {
-            // Implementar descarga como imagen usando html2canvas
-            alert('Función de descarga como imagen en desarrollo. Por ahora usa la descarga HTML o copia el código.');
+            // Crear un contenedor temporal con el HTML de la firma
+            const tempContainer = document.createElement('div');
+            tempContainer.style.position = 'absolute';
+            tempContainer.style.left = '-9999px';
+            tempContainer.style.top = '-9999px';
+            tempContainer.style.background = 'white';
+            tempContainer.style.padding = '20px';
+            tempContainer.style.width = '600px';
+            tempContainer.style.height = '400px';
+            tempContainer.style.overflow = 'hidden';
+            
+            // Insertar el HTML de la firma directamente
+            tempContainer.innerHTML = `<?php echo addslashes($signatureHTML); ?>`;
+            document.body.appendChild(tempContainer);
+
+            // Mostrar indicador de carga
+            const signaturePreview = document.querySelector('.signature-preview');
+            const originalContent = signaturePreview.innerHTML;
+            signaturePreview.innerHTML = '<div style="text-align: center; padding: 40px; color: #2c3e50;"><h3>🔄 Generando imagen...</h3><p>Por favor espera mientras se procesa la firma.</p></div>';
+
+            // Esperar a que las imágenes se carguen completamente
+            const images = tempContainer.querySelectorAll('img');
+            let loadedImages = 0;
+            const totalImages = images.length;
+
+            if (totalImages === 0) {
+                // No hay imágenes, proceder directamente
+                generateImage();
+            } else {
+                // Esperar a que todas las imágenes se carguen
+                images.forEach(img => {
+                    if (img.complete && img.naturalHeight !== 0) {
+                        loadedImages++;
+                        if (loadedImages === totalImages) {
+                            generateImage();
+                        }
+                    } else {
+                        img.onload = () => {
+                            loadedImages++;
+                            if (loadedImages === totalImages) {
+                                generateImage();
+                            }
+                        };
+                        img.onerror = () => {
+                            loadedImages++;
+                            if (loadedImages === totalImages) {
+                                generateImage();
+                            }
+                        };
+                    }
+                });
+            }
+
+            function generateImage() {
+                // Usar html2canvas en el contenedor temporal
+                html2canvas(tempContainer, {
+                    backgroundColor: '#ffffff',
+                    scale: 2, // Mejor calidad
+                    useCORS: false, // No necesario para imágenes locales
+                    allowTaint: false, // No necesario para imágenes locales
+                    width: 600,
+                    height: 400,
+                    logging: false, // Desactivar logs
+                    removeContainer: false, // No remover el contenedor
+                    imageTimeout: 10000 // Timeout de 10 segundos
+                }).then(canvas => {
+                    // Restaurar contenido original
+                    signaturePreview.innerHTML = originalContent;
+                    
+                    // Crear enlace de descarga
+                    const link = document.createElement('a');
+                    link.download = 'firma_<?php echo addslashes($displayName); ?>.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                    
+                    // Limpiar
+                    document.body.removeChild(tempContainer);
+                    
+                    // Mostrar mensaje de éxito
+                    alert('✅ Imagen descargada exitosamente como "firma_<?php echo addslashes($displayName); ?>.png"');
+                }).catch(error => {
+                    console.error('Error al generar imagen:', error);
+                    
+                    // Restaurar contenido original
+                    signaturePreview.innerHTML = originalContent;
+                    
+                    // Limpiar
+                    document.body.removeChild(tempContainer);
+                    
+                    alert('❌ Error al generar la imagen. Por favor, usa la descarga HTML.\n\nError: ' + error.message);
+                });
+            }
         }
     </script>
 </body>

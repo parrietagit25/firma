@@ -38,63 +38,29 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 // Función para generar el HTML de la firma (versión simplificada para imagen)
 function generateSignatureHTMLForImage($displayName, $title, $email, $phone, $address) {
     return '
-    <div style="background-color: #2c3e50; padding: 20px; max-width: 600px; font-family: Arial, sans-serif;">
-        <table style="border-collapse: collapse; width: 100%; height: 135px; color: white;">
+    <div style="background-color: white; padding: 20px; max-width: 600px; font-family: Arial, sans-serif;">
+        <table style="border-collapse: collapse; width: 100%; height: 135px; color: #2c3e50; background-color: white;">
             <tbody>
                 <tr>
                     <td style="width: 40%; height: 135px; vertical-align: top; padding: 10px;">
                         <p style="margin: 0 0 10px 0;">
                             <span style="font-size: 18px; color: #e74c3c; font-weight: bold;">' . htmlspecialchars($displayName) . '</span><br>
-                            <strong style="color: #ecf0f1; font-size: 14px;">' . htmlspecialchars($title) . '</strong>
+                            <strong style="color: #2c3e50; font-size: 14px;">' . htmlspecialchars($title) . '</strong>
                         </p>
-                        <p style="margin: 0; font-size: 12px; color: #bdc3c7;">
+                        <p style="margin: 0; font-size: 12px; color: #7f8c8d;">
                             ' . htmlspecialchars($email) . '<br>
                             ' . htmlspecialchars($phone) . '<br>
                             ' . htmlspecialchars($address) . '
                         </p>
                     </td>
-                    <td style="width: 60%; height: 135px; text-align: center; vertical-align: middle;">
-                        <div style="background: white; padding: 15px; border-radius: 8px; display: inline-block;">
-                            <div style="color: #2c3e50; font-size: 24px; font-weight: bold;">GrupoPCR</div>
-                            <div style="color: #7f8c8d; font-size: 12px; text-transform: uppercase;">PANAMA CAR RENTAL</div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center;">
-            <div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 20px;">
-                <div style="text-align: center;">
-                    <div style="color: #2c3e50; font-weight: bold; font-size: 14px;">AUTOMARKET</div>
-                    <div style="color: #e74c3c; font-size: 12px;">RENT A CAR ✓</div>
-                </div>
-                <div style="text-align: center;">
-                    <div style="color: #2c3e50; font-weight: bold; font-size: 14px;">AUTOSERVICE</div>
-                    <div style="color: #e74c3c; font-size: 12px;">TALLER ✓</div>
-                </div>
-                <div style="text-align: center;">
-                    <div style="color: #2c3e50; font-weight: bold; font-size: 14px;">PANARENTING</div>
-                    <div style="color: #e74c3c; font-size: 12px;">RENTING</div>
-                </div>
-                <div style="text-align: center;">
-                    <div style="color: #2c3e50; font-weight: bold; font-size: 14px;">AUTOMARKET</div>
-                    <div style="color: #e74c3c; font-size: 12px;">SEMINUEVOS ✓</div>
-                </div>
-            </div>
-        </div>
-        
-        <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 15px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div style="background: #e74c3c; color: white; padding: 10px; border-radius: 5px; text-align: center;">
-                    <div style="font-weight: bold;">ISO 45001:2018</div>
-                    <div style="font-size: 12px;">BUREAU VERITAS</div>
-                </div>
-                <div style="color: #2c3e50; font-style: italic; text-align: right; max-width: 60%;">
-                    Comprometidos con la seguridad de nuestros colaboradores, clientes y proveedores.
-                </div>
-            </div>
-        </div>
+                    <td style="width: 60%; height: 135px; text-align: center; vertical-align: middle; padding: 10px;">
+                                                            <img src="img/1.png" alt="Logotipo1" width="350" height="181" style="display: block; max-width: 100%; height: auto;" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <img style="float: left;" src="img/2.png" alt="Logotipo2" width="612" height="107" />
     </div>';
 }
 

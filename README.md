@@ -10,7 +10,7 @@ Sistema completo para generar firmas de correo electrónico profesionales person
 - **Múltiples opciones de descarga**:
   - 📄 Archivo HTML completo
   - 📋 Código HTML para copiar/pegar
-  - 📷 Imagen PNG (en desarrollo)
+  - 📷 Imagen PNG
 - **Validación de datos** completa
 - **Diseño responsivo** para todos los dispositivos
 - **Estilo corporativo** de GrupoPCR
@@ -65,25 +65,18 @@ La firma generada incluye:
 
 ### Sección Superior
 - **Información del empleado**: Nombre, cargo, email, teléfono, dirección
-- **Logo corporativo**: GrupoPCR con tagline "PANAMA CAR RENTAL"
+- **Logo corporativo**: Imagen oficial de GrupoPCR desde AWS S3
 
-### Sección de Servicios
-- **AUTOMARKET RENT A CAR** ✓
-- **AUTOSERVICE TALLER** ✓
-- **PANARENTING RENTING**
-- **AUTOMARKET SEMINUEVOS** ✓
-
-### Sección de Certificación
-- **ISO 45001:2018** - BUREAU VERITAS
-- **Compromiso de seguridad** corporativo
+### Sección Inferior
+- **Banner de servicios**: Imagen oficial con todos los servicios de la empresa desde AWS S3
 
 ## 🔧 Personalización
 
 ### Colores Corporativos
-- **Fondo principal**: `#2c3e50` (Gris oscuro)
+- **Fondo principal**: `#ffffff` (Blanco)
 - **Acentos**: `#e74c3c` (Rojo)
-- **Texto claro**: `#ecf0f1` (Blanco)
-- **Texto secundario**: `#bdc3c7` (Gris claro)
+- **Texto principal**: `#2c3e50` (Gris oscuro)
+- **Texto secundario**: `#7f8c8d` (Gris medio)
 
 ### Fuentes
 - **Principal**: Arial, sans-serif
@@ -105,7 +98,7 @@ El sistema está optimizado para:
 
 ## 🚧 Funcionalidades en Desarrollo
 
-- **Descarga como imagen PNG**: Usando html2canvas
+- **Descarga como imagen PNG**: ✅ Implementado usando html2canvas
 - **Editor visual**: Para personalizar colores y estilos
 - **Plantillas adicionales**: Diferentes estilos de firma
 - **Base de datos**: Para guardar firmas generadas
