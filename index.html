@@ -1,15 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Firma de Correo - GrupoPCR</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<table style="border-collapse: collapse; width: 98.7357%; height: 135px;" border="0">
-<tbody>
-<tr style="height: 135px;">
-<td style="width: 40.1965%; height: 135px;">
-<p><span style="font-size: 16px; color: red; font-weight: bold;">%%DisplayName%%</span><br /><strong>%%Title%%</strong></p>
-<p>%%Userprincipalname%%<br />%%MobileNumber%%<br />%%StreetAddress%%<br /></p>
-</td>
-<td style="width: 92.6453%; height: 135px;">
-<img style="float: left;" src="https://automarketpan.s3.us-east-2.amazonaws.com/Logos/2025GRUPO-PCR-TODOS-LOS-LOGOS-2024.png" alt="Logotipo1" width="300" height="181" />
-</td>
-</tr>
-</tbody>
-</table>
-<p><img style="float: left;" src="https://automarketpan.s3.us-east-2.amazonaws.com/Emails/FIRMA-1.png" alt="Logotipo2" width="612" height="107" /></p>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .form-section {
+            padding: 40px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        input[type="text"], input[type="email"], input[type="tel"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 15px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 10px 20px rgba(149, 165, 166, 0.3);
+        }
+
+        .preview-section {
+            padding: 40px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .preview-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .download-buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .signature-preview {
+            background: #2c3e50;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            min-height: 200px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .form-section, .preview-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏢 Generador de Firma de Correo</h1>
+            <p>GrupoPCR - Crea tu firma profesional personalizada</p>
+        </div>
+
+        <div class="form-section">
+            <form id="signatureForm" method="POST" action="generate_signature.php">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="displayName">Nombre Completo *</label>
+                        <input type="text" id="displayName" name="displayName" required 
+                               placeholder="Ej: Luis Hernández">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="title">Puesto/Cargo *</label>
+                        <input type="text" id="title" name="title" required 
+                               placeholder="Ej: Gerente de Tecnología">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico *</label>
+                        <input type="email" id="email" name="email" required 
+                               placeholder="Ej: luis.hernandez@grupopcr.com.pa">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Número de Teléfono *</label>
+                        <input type="tel" id="phone" name="phone" required 
+                               placeholder="Ej: +507 6983-7853">
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="address">Dirección *</label>
+                        <input type="text" id="address" name="address" required 
+                               placeholder="Ej: Tocumen Commercial Park, Local 17">
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <button type="button" class="btn" onclick="previewSignature()">
+                        👁️ Vista Previa
+                    </button>
+                    <button type="submit" class="btn">
+                        🚀 Generar Firma
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="preview-section hidden" id="previewSection">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #2c3e50;">
+                📧 Vista Previa de la Firma
+            </h2>
+            
+            <div class="preview-container">
+                <div id="signaturePreview" class="signature-preview">
+                    <!-- Aquí se mostrará la vista previa -->
+                </div>
+                
+                <div class="download-buttons">
+                    <button type="button" class="btn" onclick="downloadAsImage()">
+                        📷 Descargar como Imagen
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="downloadAsHTML()">
+                        📄 Descargar como HTML
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function previewSignature() {
+            const displayName = document.getElementById('displayName').value;
+            const title = document.getElementById('title').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+
+            if (!displayName || !title || !email || !phone || !address) {
+                alert('Por favor, completa todos los campos obligatorios.');
+                return;
+            }
+
+            const preview = document.getElementById('signaturePreview');
+            preview.innerHTML = generateSignatureHTML(displayName, title, email, phone, address);
+            
+            document.getElementById('previewSection').classList.remove('hidden');
+        }
+
+        function generateSignatureHTML(displayName, title, email, phone, address) {
+            return `
+                <table style="border-collapse: collapse; width: 100%; height: 135px; color: white; font-family: Arial, sans-serif;">
+                    <tbody>
+                        <tr style="height: 135px;">
+                            <td style="width: 40%; height: 135px; vertical-align: top; padding: 10px;">
+                                <p style="margin: 0 0 10px 0;">
+                                    <span style="font-size: 18px; color: #e74c3c; font-weight: bold;">${displayName}</span><br>
+                                    <strong style="color: #ecf0f1; font-size: 14px;">${title}</strong>
+                                </p>
+                                <p style="margin: 0; font-size: 12px; color: #bdc3c7;">
+                                    ${email}<br>
+                                    ${phone}<br>
+                                    ${address}
+                                </p>
+                            </td>
+                            <td style="width: 60%; height: 135px; text-align: center; vertical-align: middle;">
+                                <div style="background: white; padding: 15px; border-radius: 8px; display: inline-block;">
+                                    <div style="color: #2c3e50; font-size: 24px; font-weight: bold;">GrupoPCR</div>
+                                    <div style="color: #7f8c8d; font-size: 12px; text-transform: uppercase;">PANAMA CAR RENTAL</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center;">
+                    <div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 20px;">
+                        <div style="text-align: center;">
+                            <div style="color: #2c3e50; font-weight: bold; font-size: 14px;">AUTOMARKET</div>
+                            <div style="color: #e74c3c; font-size: 12px;">RENT A CAR ✓</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="color: #2c3e50; font-weight: bold; font-size: 14px;">AUTOSERVICE</div>
+                            <div style="color: #e74c3c; font-size: 12px;">TALLER ✓</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="color: #2c3e50; font-weight: bold; font-size: 14px;">PANARENTING</div>
+                            <div style="color: #e74c3c; font-size: 12px;">RENTING</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="color: #2c3e50; font-weight: bold; font-size: 14px;">AUTOMARKET</div>
+                            <div style="color: #e74c3c; font-size: 12px;">SEMINUEVOS ✓</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="background: #e74c3c; color: white; padding: 10px; border-radius: 5px; text-align: center;">
+                            <div style="font-weight: bold;">ISO 45001:2018</div>
+                            <div style="font-size: 12px;">BUREAU VERITAS</div>
+                        </div>
+                        <div style="color: #2c3e50; font-style: italic; text-align: right; max-width: 60%;">
+                            Comprometidos con la seguridad de nuestros colaboradores, clientes y proveedores.
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function downloadAsImage() {
+            // Implementar descarga como imagen usando html2canvas
+            alert('Función de descarga como imagen en desarrollo. Por ahora usa la descarga HTML.');
+        }
+
+        function downloadAsHTML() {
+            const displayName = document.getElementById('displayName').value;
+            const title = document.getElementById('title').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+
+            const htmlContent = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Firma de Correo - ${displayName}</title>
+</head>
+<body style="margin: 0; padding: 0;">
+    ${generateSignatureHTML(displayName, title, email, phone, address)}
+</body>
+</html>`;
+
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `firma_${displayName.replace(/\s+/g, '_')}.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
