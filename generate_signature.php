@@ -110,12 +110,12 @@ function generateSignatureHTML($displayName, $title, $email, $phone, $address) {
                             </div>
                         </td>
                         <td class="logo-section">
-                            <img src="img/1.png" alt="Logotipo1" width="350" height="181" style="display: block; max-width: 100%; height: auto;" />
+                            <img src="https://automarketpan.s3.us-east-2.amazonaws.com/Logos/2025GRUPO-PCR-TODOS-LOS-LOGOS-2024.png" alt="Logotipo1" width="350" height="181" style="display: block; max-width: 100%; height: auto;" />
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <img src="img/2.png" alt="Logotipo2" width="612" height="107" style="display: block; max-width: 100%; height: auto;" />
+                            <img src="https://automarketpan.s3.us-east-2.amazonaws.com/Emails/FIRMA-1.png" alt="Logotipo2" width="612" height="107" style="display: block; max-width: 100%; height: auto;" />
                         </td>
                     </tr>
                 </tbody>
