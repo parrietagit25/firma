@@ -319,11 +319,11 @@ if (isset($_POST['download']) && $_POST['download'] === 'true') {
                 <!--
                 <button type="button" class="btn" onclick="copyToClipboard()">
                     📋 Copiar HTML
-                </button>-->
+                </button>
 
                 <button type="button" class="btn btn-secondary" onclick="downloadAsImage()">
                     📷 Descargar como imagen
-                </button>
+                </button>-->
             </div>
 
             <div class="back-link">
